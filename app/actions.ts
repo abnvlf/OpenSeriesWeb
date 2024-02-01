@@ -16,13 +16,18 @@ const getPythonCommand = async () => {
 
 export async function compilePy(prevState: any, formData: FormData) {
     const code = formData.get("code");
-    const python = await getPythonCommand();
-    const pythonCmd = `${python} -c "${code}"`;
-    const runResult = await execPromise(pythonCmd).catch((val) => ({ stdout: val.stderr, stderr: val.stderr }));
+    // const python = await getPythonCommand();
+    // const pythonCmd = `${python} -c "${code}"`;
+    // const runResult = await execPromise(pythonCmd).catch((val) => ({ stdout: val.stderr, stderr: val.stderr }));
 
+    // return {
+    //     result: runResult.stderr ? runResult.stderr : runResult.stdout,
+    //     message: "Python code executed successfully",
+    //     success: runResult.stderr ? false : true
+    // };
     return {
-        result: runResult.stderr ? runResult.stderr : runResult.stdout,
+        result: "oke gas nomor 2",
         message: "Python code executed successfully",
-        success: runResult.stderr ? false : true
+        success: true
     };
 }

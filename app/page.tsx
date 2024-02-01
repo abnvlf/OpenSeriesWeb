@@ -55,7 +55,7 @@ print(matematika.radian_ke_derajat(radian))
                     >
                         Share
                     </button>
-                    <form action={formAction}>
+                    <form action={formAction} method="POST">
                         <textarea
                             name="code"
                             id="code"
@@ -67,7 +67,7 @@ print(matematika.radian_ke_derajat(radian))
                     </form>
                 </div>
             </header>
-            <form className="grid grow grid-cols-2 divide-x divide-gray-600 overflow-y-auto">
+            <div className="grid grow grid-cols-2 divide-x divide-gray-600 overflow-y-auto">
                 <ReactCodeMirror
                     value={value}
                     theme={tokyoNightStorm}
@@ -81,7 +81,7 @@ print(matematika.radian_ke_derajat(radian))
                         <code>{state?.result}</code>
                     </pre>
                 </div>
-            </form>
+            </div>
         </main>
     );
 }
