@@ -1,7 +1,7 @@
 "use client";
 
 import ReactCodeMirror from "@uiw/react-codemirror";
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useState } from "react";
 import { python } from "@codemirror/lang-python";
 import { tokyoNightStorm } from "@uiw/codemirror-theme-tokyo-night-storm";
 
