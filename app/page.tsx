@@ -13,12 +13,17 @@ print(matematika.radian_ke_derajat(radian))
 # 57,296
 `);
 
+    const [isLoading, setIsLoading] = useState(false);
+    const [result, setResult] = useState<{ message: string; result: string; success: boolean }>();
+
     const onChange = useCallback((val: string) => {
         setValue(val);
     }, []);
 
     const onRun = async () => {
-        const response = await fetch("https://opcp.azurewebsites.net/", {
+        setIsLoading(true);
+
+        const response = await fetch("http://127.0.0.1:5000", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -27,7 +32,8 @@ print(matematika.radian_ke_derajat(radian))
         });
 
         const data = await response.json();
-        console.log(data);
+        setResult(data);
+        setIsLoading(false);
     };
 
     return (
@@ -40,13 +46,13 @@ print(matematika.radian_ke_derajat(radian))
                         </span>{" "}
                         Playground
                     </h1>
-                    {/* {state?.message && (
+                    {result?.message && (
                         <span
-                            className={`rounded-full px-4 py-1 text-xs font-medium text-white ${state?.success ? "bg-green-600" : "bg-red-600"}`}
+                            className={`rounded-full px-4 py-1 text-xs font-medium text-white ${result?.success ? "bg-green-600" : "bg-red-600"}`}
                         >
-                            {state?.message}
+                            {result?.message}
                         </span>
-                    )} */}
+                    )}
                 </div>
                 <div className="flex items-center gap-2">
                     <button
@@ -56,41 +62,41 @@ print(matematika.radian_ke_derajat(radian))
                         Share
                     </button>
                     <button
-                        // disabled={pending}
+                        disabled={isLoading}
                         className={`grid h-12 w-12 place-items-center rounded-md bg-indigo-600`}
                         onClick={onRun}
                     >
-                        {/* {pending ? (
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                    strokeWidth={1.5}
-                                    stroke="currentColor"
-                                    className="h-6 w-6 animate-spin stroke-white"
-                                >
-                                    <path
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99"
-                                    />
-                                </svg>
-                            ) : ( */}
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            strokeWidth={1.5}
-                            stroke="currentColor"
-                            className="h-6 w-6 stroke-white"
-                        >
-                            <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                d="M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.347a1.125 1.125 0 0 1 0 1.972l-11.54 6.347a1.125 1.125 0 0 1-1.667-.986V5.653Z"
-                            />
-                        </svg>
-                        {/* )} */}
+                        {isLoading ? (
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                strokeWidth={1.5}
+                                stroke="currentColor"
+                                className="h-6 w-6 animate-spin stroke-white"
+                            >
+                                <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99"
+                                />
+                            </svg>
+                        ) : (
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                strokeWidth={1.5}
+                                stroke="currentColor"
+                                className="h-6 w-6 stroke-white"
+                            >
+                                <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    d="M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.347a1.125 1.125 0 0 1 0 1.972l-11.54 6.347a1.125 1.125 0 0 1-1.667-.986V5.653Z"
+                                />
+                            </svg>
+                        )}
                     </button>
                 </div>
             </header>
@@ -104,7 +110,9 @@ print(matematika.radian_ke_derajat(radian))
                 />
                 <div className="h-full overflow-auto bg-[#24283B] p-8">
                     <h2 className="mb-4 text-xl font-bold text-white">Output: </h2>
-                    <pre className="w-full overflow-auto text-white">{/* <code>{state?.result}</code> */}</pre>
+                    <pre className="w-full overflow-auto text-white">
+                        <code>{result?.result}</code>
+                    </pre>
                 </div>
             </div>
         </main>
