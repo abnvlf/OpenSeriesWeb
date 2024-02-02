@@ -1,24 +1,62 @@
 "use client";
 
-import ReactCodeMirror from "@uiw/react-codemirror";
-import { useCallback, useState } from "react";
-import { python } from "@codemirror/lang-python";
-import { tokyoNightStorm } from "@uiw/codemirror-theme-tokyo-night-storm";
+import { Editor } from "@monaco-editor/react";
+import { useState } from "react";
 
 export default function Home() {
-    const [code, setCode] = useState(`import OpenSeries.matematika as matematika
+    const [code, setCode] = useState(`# ==========================================
+# Playground Python untuk OpenSeries Library
+# ==========================================
+
+import OpenSeries.matematika as matematika
+import OpenSeries.fisika as fisika
+from OpenSeries import statistika as statistika
+import numpy as np
 
 radian = 1
-print(matematika.radian_ke_derajat(radian))
-# 57,296
+print('radian_ke_derajat', matematika.radian_ke_derajat(radian))
+
+jari = 10
+print('luas_lingkaran', matematika.luas_lingkaran(jari))
+
+print('keliling_lingkaran', matematika.keliling_lingkaran(jari))
+
+print('diameter_lingkaran', matematika.diameter_lingkaran(jari))
+
+print('persamaan_kuadrat', matematika.persamaan_kuadrat(1, -3, 2))
+
+waktu = 2.3
+jarak = 4
+print('kecepatan', fisika.kecepatan(jarak, waktu))
+
+masa_benda = 14
+kecepatan_benda = 23.4
+print('energi_kinetik', fisika.energi_kinetik(masa_benda, kecepatan_benda))
+
+massa_benda = 14
+volume_benda = 8
+print('masa_jenis', fisika.masa_jenis(massa_benda, volume_benda))
+
+massa_benda_potensial = 12
+gravitasi_bumi = 9.78
+ketinggian_benda = 400
+print('energi_potensial', fisika.energi_potensial(massa_benda_potensial, gravitasi_bumi, ketinggian_benda))
+
+kuat_arus = 30
+hambatan = 3
+print('hukum_ohm', fisika.hukum_ohm(kuat_arus, hambatan))
+
+label = [1, 1, 2, 2, 3, 3]
+hasil_base_2 = statistika.entropy(label, base=2)
+print('entropy', hasil_base_2)
+
+vektor = np.array([1, 2, 3, 4, 5])
+hasil = statistika.standar_deviasi(vektor)
+print('standar_deviasi', hasil)
 `);
 
     const [isLoading, setIsLoading] = useState(false);
     const [result, setResult] = useState<{ message: string; result: string; success: boolean }>();
-
-    const onChange = useCallback((val: string) => {
-        setCode(val);
-    }, []);
 
     const onRun = async () => {
         setIsLoading(true);
@@ -38,9 +76,9 @@ print(matematika.radian_ke_derajat(radian))
 
     return (
         <main className="flex max-h-dvh min-h-dvh flex-col overflow-hidden">
-            <header className="flex items-center justify-between border-b border-b-gray-600 bg-[#24283B] px-6 py-2">
+            <header className="flex items-center justify-between border-b px-6 py-2">
                 <div className="flex items-center gap-4">
-                    <h1 className="text-xl font-bold text-white">
+                    <h1 className="text-xl font-bold text-zinc-800">
                         <span className="bg-gradient-to-br from-indigo-600 to-rose-400 bg-clip-text font-bold text-transparent">
                             OpenSeries
                         </span>{" "}
@@ -100,17 +138,16 @@ print(matematika.radian_ke_derajat(radian))
                     </button>
                 </div>
             </header>
-            <div className="grid grow grid-cols-2 divide-x divide-gray-600 overflow-y-auto">
-                <ReactCodeMirror
-                    value={code}
-                    theme={tokyoNightStorm}
-                    className="h-full overflow-auto bg-[#24283B]"
-                    extensions={[python()]}
-                    onChange={onChange}
+            <div className="grid grow grid-cols-2 divide-x overflow-y-auto">
+                <Editor
+                    className="h-full"
+                    defaultLanguage="python"
+                    defaultValue={code}
+                    onChange={(val) => setCode(val!)}
                 />
-                <div className="h-full overflow-auto bg-[#24283B] p-8">
-                    <h2 className="mb-4 text-xl font-bold text-white">Output: </h2>
-                    <pre className="w-full overflow-auto text-white">
+                <div className="h-full overflow-auto p-8">
+                    <h2 className="mb-4 text-xl font-bold text-zinc-800">Output: </h2>
+                    <pre className="w-full overflow-auto text-zinc-800">
                         <code>{result?.result}</code>
                     </pre>
                 </div>
