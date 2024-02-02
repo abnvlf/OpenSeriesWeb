@@ -17,20 +17,17 @@ print(matematika.radian_ke_derajat(radian))
         setValue(val);
     }, []);
 
-    const onCompile = async () => {
-        const response = await fetch("/api", {
+    const onRun = async () => {
+        const response = await fetch("https://opcp.azurewebsites.net/", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({ code: value })
         });
+
         const data = await response.json();
-        if (data.success) {
-            console.log("Compilation successful:", data.result);
-        } else {
-            console.error("Compilation error:", data.message);
-        }
+        console.log(data);
     };
 
     return (
@@ -60,25 +57,25 @@ print(matematika.radian_ke_derajat(radian))
                     </button>
                     <button
                         // disabled={pending}
-                        onClick={onCompile}
                         className={`grid h-12 w-12 place-items-center rounded-md bg-indigo-600`}
+                        onClick={onRun}
                     >
                         {/* {pending ? (
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                strokeWidth={1.5}
-                                stroke="currentColor"
-                                className="h-6 w-6 animate-spin stroke-white"
-                            >
-                                <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99"
-                                />
-                            </svg>
-                        ) : ( */}
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    strokeWidth={1.5}
+                                    stroke="currentColor"
+                                    className="h-6 w-6 animate-spin stroke-white"
+                                >
+                                    <path
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99"
+                                    />
+                                </svg>
+                            ) : ( */}
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             fill="none"
