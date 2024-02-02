@@ -6,7 +6,7 @@ import { python } from "@codemirror/lang-python";
 import { tokyoNightStorm } from "@uiw/codemirror-theme-tokyo-night-storm";
 
 export default function Home() {
-    const [value, setValue] = useState(`import OpenSeries.matematika as matematika
+    const [code, setCode] = useState(`import OpenSeries.matematika as matematika
 
 radian = 1
 print(matematika.radian_ke_derajat(radian))
@@ -17,18 +17,18 @@ print(matematika.radian_ke_derajat(radian))
     const [result, setResult] = useState<{ message: string; result: string; success: boolean }>();
 
     const onChange = useCallback((val: string) => {
-        setValue(val);
+        setCode(val);
     }, []);
 
     const onRun = async () => {
         setIsLoading(true);
 
-        const response = await fetch("http://127.0.0.1:5000", {
+        const response = await fetch(String(process.env.NEXT_PUBLIC_RUN_API), {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({ code: value })
+            body: JSON.stringify({ code })
         });
 
         const data = await response.json();
@@ -102,7 +102,7 @@ print(matematika.radian_ke_derajat(radian))
             </header>
             <div className="grid grow grid-cols-2 divide-x divide-gray-600 overflow-y-auto">
                 <ReactCodeMirror
-                    value={value}
+                    value={code}
                     theme={tokyoNightStorm}
                     className="h-full overflow-auto bg-[#24283B]"
                     extensions={[python()]}
