@@ -17,6 +17,7 @@
         "react-dom": "^18"
     },
     "devDependencies": {
+        "@iconify/json": "^2.2.179",
         "@iconify/tailwind": "^0.1.4",
         "@types/node": "^20",
         "@types/react": "^18",
