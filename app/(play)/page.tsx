@@ -59,7 +59,8 @@ print('standar_deviasi', hasil)
 `);
 
     const { runPython, stdout, stderr, isLoading, isRunning } = usePython();
-    const { theme } = useTheme();
+    const { theme, systemTheme } = useTheme();
+    const currentTheme = theme === "system" ? systemTheme : theme;
 
     return (
         <>
@@ -110,7 +111,7 @@ print('standar_deviasi', hasil)
                         className="h-full"
                         defaultLanguage="python"
                         defaultValue={code}
-                        theme={theme === "dark" ? "vs-dark" : "vs-light"}
+                        theme={currentTheme === "dark" ? "vs-dark" : "vs-light"}
                         onChange={(val) => setCode(val!)}
                     />
                     <div className="relative flex h-full overflow-auto p-8">
