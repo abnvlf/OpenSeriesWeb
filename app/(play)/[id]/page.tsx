@@ -1,6 +1,8 @@
+"use client";
+
 import Codeblock from "@/components/Codeblock";
-import React from "react";
-import { redirect } from "next/navigation";
+import React, { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
 type Props = {
     params: {
@@ -8,20 +10,28 @@ type Props = {
     };
 };
 
-const page = async ({ params: { id } }: Props) => {
-    const response = await fetch(process.env.NEXT_PUBLIC_URL + "/share?id=" + id, {
-        cache: "no-store",
-        method: "GET",
-        headers: {
-            "Content-Type": "application/json"
-        }
-    });
+const page = ({ params: { id } }: Props) => {
+    const [loaded, setLoaded] = useState(false);
+    const [result, setResult] = useState();
+    const router = useRouter();
 
-    const result = await response.json();
+    useEffect(() => {
+        fetch(process.env.NEXT_PUBLIC_URL + "/share?id=" + id, {
+            cache: "no-store",
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })
+            .then((response) => response.json())
+            .then((r) => {
+                setResult(r);
+                if (!r?.result) router.replace("/");
+                setLoaded(true);
+            });
+    }, []);
 
-    if (!result.result) redirect("/");
-
-    return <Codeblock data={result} />;
+    return <>{loaded ? <Codeblock data={result} /> : "loading..."}</>;
 };
 
 export default page;
