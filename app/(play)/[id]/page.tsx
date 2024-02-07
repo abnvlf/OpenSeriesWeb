@@ -10,7 +10,7 @@ type Props = {
     };
 };
 
-const page = ({ params: { id } }: Props) => {
+const PlaygroundShare = ({ params: { id } }: Props) => {
     const [loaded, setLoaded] = useState(false);
     const [result, setResult] = useState();
     const router = useRouter();
@@ -29,9 +29,9 @@ const page = ({ params: { id } }: Props) => {
                 if (!r?.result) router.replace("/");
                 setLoaded(true);
             });
-    }, []);
+    }, [id, router]);
 
     return <>{loaded ? <Codeblock data={result} /> : "loading..."}</>;
 };
 
-export default page;
+export default PlaygroundShare;
